@@ -20,6 +20,7 @@
 using System;
 
 namespace Mono.MyStuff {
+	[Serializable]
 	public class DumpedMethod {
 		public ushort mhFlags;			// method header Flags
 		public ushort mhMaxStack;		// method header MaxStack

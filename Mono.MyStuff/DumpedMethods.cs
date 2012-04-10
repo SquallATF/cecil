@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using Mono.Cecil;
 
 namespace Mono.MyStuff {
+	[Serializable]
 	public class DumpedMethods {
 		Dictionary<uint, DumpedMethod> methods = new Dictionary<uint, DumpedMethod>();
 
