@@ -565,8 +565,6 @@ namespace Mono.Cecil {
 		{
 			if (fullName == null)
 				throw new ArgumentNullException ("fullName");
-			if (fullName.Length == 0)
-				throw new ArgumentException ();
 		}
 
 		TypeDefinition GetNestedType (string fullname)
