@@ -81,9 +81,6 @@ namespace Mono.Cecil {
 
 		public static void WriteModuleTo (ModuleDefinition module, Stream stream, WriterParameters parameters)
 		{
-			if ((module.Attributes & ModuleAttributes.ILOnly) == 0)
-				throw new ArgumentException ("Module contains native code");
-
 			if (module.HasImage && module.ReadingMode == ReadingMode.Deferred)
 				ImmediateModuleReader.ReadModule (module);
 
