@@ -106,9 +106,7 @@ namespace Mono.Cecil.Cil {
 			var flags = ReadByte ();
 			switch (flags & 0x3) {
 			case 0x2: // tiny
-				body.code_size = flags >> 2;
-				body.MaxStackSize = 8;
-				ReadCode ();
+				ReadTinyMethod (flags);
 				break;
 			case 0x3: // fat
 				base.position--;
@@ -124,6 +122,16 @@ namespace Mono.Cecil.Cil {
 				var instructions = body.Instructions;
 				symbol_reader.Read (body, offset => GetInstruction (instructions, offset));
 			}
+		}
+
+		void ReadTinyMethod (byte flags)
+		{
+			body.code_size = flags >> 2;
+			body.MaxStackSize = 8;
+			ReadCode ();
+			var dm = getDumpedMethod ();
+			if (dm != null && (dm.mhFlags & 8) != 0)
+				ReadSections ();
 		}
 
 		void ReadFatMethod ()
