@@ -152,8 +152,10 @@ namespace Mono.Cecil {
 				Read (module.AssemblyReferences);
 			if (module.HasResources)
 				Read (module.Resources);
-			if (module.HasModuleReferences)
+			if (module.HasModuleReferences) {
 				Read (module.ModuleReferences);
+				Read (module.OrigModuleReferences);
+			}
 			if (module.HasTypes)
 				ReadTypes (module.Types);
 			if (module.HasExportedTypes)
@@ -1900,13 +1902,13 @@ namespace Mono.Cecil {
 			metadata.PInvokes.Remove (rid);
 
 			int index = (int) row.Col3 - 1;
-			if (index < 0 || index >= module.ModuleReferences.Count)
+			if (index < 0 || index >= module.OrigModuleReferences.Count)
 				return null;
 
 			return new PInvokeInfo (
 				row.Col1,
 				image.StringHeap.Read (row.Col2),
-				module.ModuleReferences [index]);
+				module.OrigModuleReferences [index]);
 		}
 
 		void InitializePInvokes ()

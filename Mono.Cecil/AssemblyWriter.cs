@@ -875,6 +875,10 @@ namespace Mono.Cecil {
 
 			if (module.EntryPoint != null)
 				entry_point = LookupToken (module.EntryPoint);
+
+			module.OrigModuleReferences.Clear ();
+			foreach (var reference in module.ModuleReferences)
+				module.OrigModuleReferences.Add (reference);
 		}
 
 		void BuildAssembly ()
