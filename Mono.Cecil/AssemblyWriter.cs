@@ -970,15 +970,16 @@ namespace Mono.Cecil {
 		void AddModuleReferences ()
 		{
 			var references = module.ModuleReferences;
+			for (int i = 0; i < references.Count; i++)
+				AddModulereference (references [i]);
+		}
+
+		void AddModulereference (ModuleReference reference)
+		{
 			var table = GetTable<ModuleRefTable> (Table.ModuleRef);
-
-			for (int i = 0; i < references.Count; i++) {
-				var reference = references [i];
-
-				reference.token = new MetadataToken (
-					TokenType.ModuleRef,
-					table.AddRow (GetStringIndex (reference.Name)));
-			}
+			reference.token = new MetadataToken (
+				TokenType.ModuleRef,
+				table.AddRow (GetStringIndex (reference.Name)));
 		}
 
 		void AddResources ()
@@ -1490,12 +1491,18 @@ namespace Mono.Cecil {
 			if (pinvoke == null)
 				return;
 
+			var pinvoke_module = pinvoke.Module;
+			if (module.ModuleReferences.IndexOf (pinvoke_module) < 0) {
+				module.ModuleReferences.Add (pinvoke_module);
+				AddModulereference (pinvoke_module);
+			}
+
 			var table = GetTable<ImplMapTable> (Table.ImplMap);
 			table.AddRow (new ImplMapRow (
 				pinvoke.Attributes,
 				MakeCodedRID (method, CodedIndex.MemberForwarded),
 				GetStringIndex (pinvoke.EntryPoint),
-				pinvoke.Module.MetadataToken.RID));
+				pinvoke_module.MetadataToken.RID));
 		}
 
 		void AddOverrides (MethodDefinition method)
