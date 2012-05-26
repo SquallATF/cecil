@@ -199,8 +199,14 @@ namespace Mono.Cecil.Cil {
 				var opcode = ReadOpCode ();
 				var current = new Instruction (offset, opcode);
 
-				if (opcode.OperandType != OperandType.InlineNone)
-					current.operand = ReadOperand (current, end);
+				if (opcode.OperandType != OperandType.InlineNone) {
+					try {
+						current.operand = ReadOperand (current, end);
+					}
+					catch {
+						current.operand = null;
+					}
+				}
 
 				instructions.Add (current);
 			}
