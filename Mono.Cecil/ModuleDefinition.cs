@@ -477,7 +477,12 @@ namespace Mono.Cecil {
 			this.token = new MetadataToken (TokenType.Module, 1);
 		}
 
-		internal ModuleDefinition (Image image, DumpedMethods dumpedMethods = null)
+		internal ModuleDefinition (Image image)
+			: this (image, null)
+		{
+		}
+
+		internal ModuleDefinition (Image image, DumpedMethods dumpedMethods)
 			: this ()
 		{
 			this.Image = image;
@@ -963,7 +968,12 @@ namespace Mono.Cecil {
 			return ReadModule (stream, new ReaderParameters (ReadingMode.Deferred));
 		}
 
-		public static ModuleDefinition ReadModule (string fileName, ReaderParameters parameters, DumpedMethods dumpedMethods = null)
+		public static ModuleDefinition ReadModule (string fileName, ReaderParameters parameters)
+		{
+			return ReadModule (fileName, parameters, null);
+		}
+
+		public static ModuleDefinition ReadModule (string fileName, ReaderParameters parameters, DumpedMethods dumpedMethods)
 		{
 			using (var stream = GetFileStream (fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 				return ReadModule (stream, parameters, dumpedMethods);
@@ -976,7 +986,12 @@ namespace Mono.Cecil {
 				throw new ArgumentNullException ("stream");
 		}
 
-		public static ModuleDefinition ReadModule (Stream stream, ReaderParameters parameters, DumpedMethods dumpedMethods = null)
+		public static ModuleDefinition ReadModule (Stream stream, ReaderParameters parameters)
+		{
+			return ReadModule (stream, parameters, null);
+		}
+
+		public static ModuleDefinition ReadModule (Stream stream, ReaderParameters parameters, DumpedMethods dumpedMethods)
 		{
 			CheckStream (stream);
 			if (!stream.CanRead || !stream.CanSeek)

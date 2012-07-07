@@ -46,7 +46,12 @@ namespace Mono.Cecil {
 		readonly protected Image image;
 		readonly protected ModuleDefinition module;
 
-		protected ModuleReader (Image image, ReadingMode mode, DumpedMethods dumpedMethods = null)
+		protected ModuleReader (Image image, ReadingMode mode)
+			: this (image, mode, null)
+		{
+		}
+
+		protected ModuleReader (Image image, ReadingMode mode, DumpedMethods dumpedMethods)
 		{
 			this.image = image;
 			this.module = new ModuleDefinition (image, dumpedMethods);
@@ -77,7 +82,12 @@ namespace Mono.Cecil {
 			assembly.main_module = module;
 		}
 
-		public static ModuleDefinition CreateModuleFrom (Image image, ReaderParameters parameters, DumpedMethods dumpedMethods = null)
+		public static ModuleDefinition CreateModuleFrom (Image image, ReaderParameters parameters)
+		{
+			return CreateModuleFrom (image, parameters, null);
+		}
+
+		public static ModuleDefinition CreateModuleFrom (Image image, ReaderParameters parameters, DumpedMethods dumpedMethods)
 		{
 			var module = ReadModule (image, parameters, dumpedMethods);
 
@@ -110,14 +120,24 @@ namespace Mono.Cecil {
 			}
 		}
 
-		static ModuleDefinition ReadModule (Image image, ReaderParameters parameters, DumpedMethods dumpedMethods = null)
+		static ModuleDefinition ReadModule (Image image, ReaderParameters parameters)
+		{
+			return ReadModule (image, parameters, null);
+		}
+
+		static ModuleDefinition ReadModule (Image image, ReaderParameters parameters, DumpedMethods dumpedMethods)
 		{
 			var reader = CreateModuleReader (image, parameters.ReadingMode, dumpedMethods);
 			reader.ReadModule ();
 			return reader.module;
 		}
 
-		static ModuleReader CreateModuleReader (Image image, ReadingMode mode, DumpedMethods dumpedMethods = null)
+		static ModuleReader CreateModuleReader (Image image, ReadingMode mode)
+		{
+			return CreateModuleReader (image, mode, null);
+		}
+
+		static ModuleReader CreateModuleReader (Image image, ReadingMode mode, DumpedMethods dumpedMethods)
 		{
 			switch (mode) {
 			case ReadingMode.Immediate:
@@ -132,7 +152,12 @@ namespace Mono.Cecil {
 
 	sealed class ImmediateModuleReader : ModuleReader {
 
-		public ImmediateModuleReader (Image image, DumpedMethods dumpedMethods = null)
+		public ImmediateModuleReader (Image image)
+			: this (image, null)
+		{
+		}
+
+		public ImmediateModuleReader (Image image, DumpedMethods dumpedMethods)
 			: base (image, ReadingMode.Immediate, dumpedMethods)
 		{
 		}
@@ -346,7 +371,12 @@ namespace Mono.Cecil {
 
 	sealed class DeferredModuleReader : ModuleReader {
 
-		public DeferredModuleReader (Image image, DumpedMethods dumpedMethods = null)
+		public DeferredModuleReader (Image image)
+			:  this (image, null)
+		{
+		}
+
+		public DeferredModuleReader (Image image, DumpedMethods dumpedMethods)
 			: base (image, ReadingMode.Deferred, dumpedMethods)
 		{
 		}
@@ -376,7 +406,12 @@ namespace Mono.Cecil {
 			set { base.position = (int) value; }
 		}
 
-		public MetadataReader (ModuleDefinition module, DumpedMethods dumpedMethods = null)
+		public MetadataReader (ModuleDefinition module)
+			: this (module, null)
+		{
+		}
+
+		public MetadataReader (ModuleDefinition module, DumpedMethods dumpedMethods)
 			: base (module.Image.MetadataSection.Data)
 		{
 			this.image = module.Image;
@@ -3331,7 +3366,12 @@ namespace Mono.Cecil {
 			return size_left < 0 ? 0 : size_left;
 		}
 
-		public bool CanReadMore (int size = 1)
+		public bool CanReadMore ()
+		{
+			return CanReadMore (1);
+		}
+
+		public bool CanReadMore (int size)
 		{
 			return size <= SizeLeft ();
 		}

@@ -53,7 +53,12 @@ namespace Mono.Cecil.Cil {
 			get { return base.position - start; }
 		}
 
-		public CodeReader (Section section, MetadataReader reader, DumpedMethods dumpedMethods = null)
+		public CodeReader (Section section, MetadataReader reader)
+			: this (section, reader, null)
+		{
+		}
+
+		public CodeReader (Section section, MetadataReader reader, DumpedMethods dumpedMethods)
 			: base (section.Data)
 		{
 			this.code_section = section;
