@@ -849,6 +849,11 @@ namespace Mono.Cecil {
 			return Read (token, (t, reader) => reader.LookupToken (t));
 		}
 
+		public CallSite ReadCallSite (MetadataToken token)
+		{
+			return Read (token, (t, reader) => reader.ReadCallSite (t));
+		}
+
 		internal TRet Read<TItem, TRet> (TItem item, Func<TItem, MetadataReader, TRet> read)
 		{
 			var position = reader.position;
