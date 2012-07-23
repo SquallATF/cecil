@@ -39,6 +39,10 @@ namespace Mono.Cecil {
 		byte [] data;
 		Stream stream;
 
+		public uint? Offset {
+			get { return offset; }
+		}
+
 		public override ResourceType ResourceType {
 			get { return ResourceType.Embedded; }
 		}
