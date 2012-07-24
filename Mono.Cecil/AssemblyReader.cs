@@ -646,8 +646,12 @@ namespace Mono.Cecil {
 					SymbolReaderProvider = module.SymbolReaderProvider,
 				};
 
-				modules.Add (ModuleDefinition.ReadModule (
-					GetModuleFileName (name), parameters));
+				try {
+					modules.Add (ModuleDefinition.ReadModule (
+						GetModuleFileName (name), parameters));
+				}
+				catch {
+				}
 			}
 
 			return modules;
