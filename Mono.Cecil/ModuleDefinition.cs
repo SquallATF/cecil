@@ -486,6 +486,7 @@ namespace Mono.Cecil {
 			: this ()
 		{
 			this.Image = image;
+			this.Image.DumpedMethods = dumpedMethods;
 			this.kind = image.Kind;
 			this.runtime = image.Runtime;
 			this.architecture = image.Architecture;
@@ -496,11 +497,9 @@ namespace Mono.Cecil {
 			this.reader = new MetadataReader (this, dumpedMethods);
 		}
 
-		public string GetUserString (uint offset)
+		public string GetUserString (uint token)
 		{
-			if (Image.UserStringHeap == null)
-				return string.Empty;
-			return Image.UserStringHeap.Read (offset);
+			return Image.GetUserString (token);
 		}
 
 		public bool HasTypeReference (string fullName)

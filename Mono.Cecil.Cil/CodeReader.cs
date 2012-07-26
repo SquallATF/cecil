@@ -290,7 +290,7 @@ namespace Mono.Cecil.Cil {
 
 		public string GetString (MetadataToken token)
 		{
-			return reader.image.UserStringHeap.Read (token.RID);
+			return reader.image.GetUserString (token.ToUInt32 ());
 		}
 
 		public ParameterDefinition GetParameter (int index)
