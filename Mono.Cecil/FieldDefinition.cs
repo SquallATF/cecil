@@ -46,6 +46,8 @@ namespace Mono.Cecil {
 
 		MarshalInfo marshal_info;
 
+		internal uint signature;
+
 		void ResolveLayout ()
 		{
 			if (offset != Mixin.NotResolvedMarker)

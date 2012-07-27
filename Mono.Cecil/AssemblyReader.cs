@@ -445,7 +445,7 @@ namespace Mono.Cecil {
 			return blob_heap.Read (ReadBlobIndex ());
 		}
 
-		byte [] ReadBlob (uint signature)
+		internal byte [] ReadBlob (uint signature)
 		{
 			var blob_heap = image.BlobHeap;
 			if (blob_heap == null)
@@ -1300,6 +1300,7 @@ namespace Mono.Cecil {
 
 			var field = new FieldDefinition (name, attributes, ReadFieldType (signature));
 			field.token = new MetadataToken (TokenType.Field, field_rid);
+			field.signature = signature;
 			metadata.AddFieldDefinition (field);
 
 			if (IsDeleted (field))

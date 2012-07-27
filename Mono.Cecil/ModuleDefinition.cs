@@ -502,6 +502,11 @@ namespace Mono.Cecil {
 			return Image.GetUserString (token);
 		}
 
+		public byte[] GetSignatureBlob (FieldDefinition field)
+		{
+			return Read (field, (f, reader) => reader.ReadBlob (f.signature));
+		}
+
 		public bool HasTypeReference (string fullName)
 		{
 			return HasTypeReference (string.Empty, fullName);
