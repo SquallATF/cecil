@@ -445,6 +445,13 @@ namespace Mono.Cecil {
 			return blob_heap.Read (ReadBlobIndex ());
 		}
 
+		internal byte [] ReadStandAloneSignatureBlob (MetadataToken token)
+		{
+			if (!MoveTo (Table.StandAloneSig, token.RID))
+				return Empty<byte>.Array;
+			return ReadBlob (ReadBlobIndex ());
+		}
+
 		internal byte [] ReadBlob (uint signature)
 		{
 			var blob_heap = image.BlobHeap;

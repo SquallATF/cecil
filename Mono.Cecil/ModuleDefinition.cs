@@ -502,7 +502,15 @@ namespace Mono.Cecil {
 			return Image.GetUserString (token);
 		}
 
-		public byte[] GetSignatureBlob (FieldDefinition field)
+		public byte [] GetSignatureBlob (uint token)
+		{
+			uint table = token >> 24;
+			if (table == 0x11)
+				return Read (token, (t, reader) => reader.ReadStandAloneSignatureBlob (new MetadataToken (token)));
+			return null;
+		}
+
+		public byte [] GetSignatureBlob (FieldDefinition field)
 		{
 			return Read (field, (f, reader) => reader.ReadBlob (f.signature));
 		}
