@@ -2056,7 +2056,7 @@ namespace Mono.Cecil {
 					owner = next;
 					range.Length++;
 				} else if (next != owner) {
-					if (owner.RID != 0)
+					if (owner.RID != 0 && !ranges.ContainsKey (owner))
 						ranges.Add (owner, range);
 					range = new Range (i, 1);
 					owner = next;
