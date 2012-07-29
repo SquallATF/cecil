@@ -184,6 +184,7 @@ namespace Mono.Cecil.Cil {
 					body.local_var_token = new MetadataToken (dm.mhLocalVarSigTok);
 				if (body.local_var_token.RID != 0)
 					body.variables = ReadVariables (body.local_var_token);
+				body.init_locals = (dm.mhFlags & 0x10) != 0;
 
 				buffer = dm.code;
 				length = dm.code.Length;
