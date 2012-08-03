@@ -31,6 +31,7 @@ namespace Mono.MyStuff {
 		Dictionary<uint, DumpedMethod> methods = new Dictionary<uint, DumpedMethod>();
 		IStringDecrypter stringDecrypter = new NoStringDecrypter();
 
+		[Serializable]
 		class NoStringDecrypter : IStringDecrypter {
 			public string decrypt(uint token) {
 				return null;
