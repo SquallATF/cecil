@@ -301,6 +301,7 @@ namespace Mono.Cecil {
 
 		public AssemblyDefinition Assembly {
 			get { return assembly; }
+			set { assembly = value; }
 		}
 
 #if !READ_ONLY

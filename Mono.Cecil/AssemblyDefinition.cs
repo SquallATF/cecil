@@ -70,6 +70,7 @@ namespace Mono.Cecil {
 
 		public ModuleDefinition MainModule {
 			get { return main_module; }
+			set { main_module = value; }
 		}
 
 		public MethodDefinition EntryPoint {
@@ -103,7 +104,7 @@ namespace Mono.Cecil {
 			get { return security_declarations ?? (security_declarations = this.GetSecurityDeclarations (main_module)); }
 		}
 
-		internal AssemblyDefinition ()
+		public AssemblyDefinition ()
 		{
 		}
 
