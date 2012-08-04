@@ -47,7 +47,11 @@ namespace Mono.Cecil.Metadata {
 			var data = Section.Data;
 
 			int position = (int) (index + Offset);
+			if (position < 0)
+				return Empty<byte>.Array;
 			int length = (int) data.ReadCompressedUInt32 (ref position);
+			if (position + length < position || position + length > data.Length)
+				return Empty<byte>.Array;
 
 			var buffer = new byte [length];
 
